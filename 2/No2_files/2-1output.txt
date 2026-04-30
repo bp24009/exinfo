@@ -1,0 +1,26 @@
+&c=0x5e204a8a7011
+&pi1=0x7ffd9dade078
+&pi2=0x7ffd9dade080
+&s1=0x7ffd9dade076
+
+s2=3
+&s2=0x7ffd9dade05c
+
+*ps=9
+ps=0x7ffd9dade076
+&ps=0x7ffd9dade058
+
+*pi1(Before init.)=0
+*pi1=1
+pi1=0x5e204cb676b0
+&pi1=0x7ffd9dade078
+
+**ppi(Before init.)=0
+**ppi=-3
+*ppi=0x5e204cb676d0
+ppi=0x7ffd9dade080
+&ppi=0x7ffd9dade048
+
+pi2=0x5e204cb676d0
+
+*pi2=-3

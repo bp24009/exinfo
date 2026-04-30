@@ -11,7 +11,7 @@ int main(void)
 {
   int *pi1;
   int *pi2;
-  short s1=3;    //(1)static short
+  static short s1=3;    //(1)static short
 
   printf("&c=%p\n",&c);
   printf("&pi1=%p\n",&pi1);
@@ -28,7 +28,7 @@ int main(void)
   printf("pi1=%p\n",pi1);
   printf("&pi1=%p\n\n",&pi1);
 
-  //  free(pi1);
+  free(pi1);
 
   func3(&pi2);
   printf("pi2=%p\n\n",pi2);
@@ -48,7 +48,7 @@ void func1(short s2)
   printf("&s2=%p\n\n",&s2);
 }
 
-void func2(short *ps)
+void func2(short *ps) 
 {
   *ps *= (*ps);
   printf("*ps=%d\n",*ps);
