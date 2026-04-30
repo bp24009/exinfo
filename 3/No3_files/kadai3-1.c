@@ -2,10 +2,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>		//mathƒ‰ƒCƒuƒ‰ƒŠ‚ğ—˜—p‚·‚éê‡‚ÍƒRƒ“ƒpƒCƒ‹‚É -lm
+#include <math.h>		//mathï¿½ï¿½ï¿½Cï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ğ—˜—pï¿½ï¿½ï¿½ï¿½ê‡ï¿½ÍƒRï¿½ï¿½ï¿½pï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -lm
 
-#define MAX_REPEAT 1000		//ƒRƒs[ŒJ‚è•Ô‚µ‰ñ”
-#define SIZE 500		//‰æ‘œƒTƒCƒYis—ñj
+#define MAX_REPEAT 1000		//ï¿½Rï¿½sï¿½[ï¿½Jï¿½ï¿½Ô‚ï¿½ï¿½ï¿½
+#define SIZE 5		//ï¿½æ‘œï¿½Tï¿½Cï¿½Yï¿½iï¿½sï¿½ï¿½ï¿½ï¿½j
 
 #ifdef CSQ
 #define DIM1 3
@@ -25,7 +25,7 @@ void write_ppm_cip(UCHAR [][DIM2][DIM3],char *,int ,int);
 void error1(char *);
 
 
-/* ‰æ‘œ‚ÌƒRƒs[ */
+/* ï¿½æ‘œï¿½ÌƒRï¿½sï¿½[ */
 void copy3dimg(UCHAR res[][DIM2][DIM3],UCHAR org[][DIM2][DIM3],int dim1,int dim2,int dim3)
 {
   int i,j,k;
@@ -33,19 +33,19 @@ void copy3dimg(UCHAR res[][DIM2][DIM3],UCHAR org[][DIM2][DIM3],int dim1,int dim2
   for(i=0;i<dim1;i++)
     for(j=0;j<dim2;j++)
       for(k=0;k<dim3;k++)
-	res[i][j][k]=org[i][j][k];
+	res[i][j][k]=org[i][j][k]/2;
 }
 
 
-  UCHAR org[DIM1][DIM2][DIM3];	/* ì¬‰æ‘œ */
-  UCHAR res[DIM1][DIM2][DIM3];	/* ƒRƒs[æ‰æ‘œ */
+  UCHAR org[DIM1][DIM2][DIM3];	/* ï¿½ì¬ï¿½æ‘œ */
+  UCHAR res[DIM1][DIM2][DIM3];	/* ï¿½Rï¿½sï¿½[ï¿½ï¿½æ‘œ */
 
 
 int main(void)
 {
   int repeat;
 
-				/* ‰æ‘œ‚Ìì¬ */
+				/* ï¿½æ‘œï¿½Ìì¬ */
   {
     int i,j,k;
 
@@ -55,23 +55,23 @@ int main(void)
 	  org[i][j][k]=(UCHAR)((i*j+10*j+k*k)%256);
   }
      
-				/* ‰æ‘œ‚ÌƒRƒs[ */
+				/* ï¿½æ‘œï¿½ÌƒRï¿½sï¿½[ */
   for(repeat=0;repeat<MAX_REPEAT;repeat++)
     copy3dimg(res,org,DIM1,DIM2,DIM3);
 
-				/* ƒtƒ@ƒCƒ‹‚Ö‚Ìo—Í */
+				/* ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ö‚Ìoï¿½ï¿½ */
 #ifdef CSQ
-  write_ppm_csq(res,"./tmp.ppm",DIM3,DIM2);
+  //write_ppm_csq(res,"./tmp.ppm",DIM3,DIM2);
 #endif
 #ifdef CIP
-  write_ppm_cip(res,"./tmp.ppm",DIM2,DIM1);
+  //write_ppm_cip(res,"./tmp.ppm",DIM2,DIM1);
 #endif
   
   return 0;
 }
 
 
-/* ƒtƒ@ƒCƒ‹‚Ö‚Ìo—Í(CSQj */
+/* ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ö‚Ìoï¿½ï¿½(CSQï¿½j */
 void write_ppm_csq(UCHAR data_buf[][DIM2][DIM3],char *fname,int width,int height)
 {
   FILE *fp;
@@ -82,9 +82,9 @@ void write_ppm_csq(UCHAR data_buf[][DIM2][DIM3],char *fname,int width,int height
     exit(1) ;
   }
 
-  fprintf(fp, "P6\n") ;			/* ƒJƒ‰[‰æ‘œ‚©‚ÂƒoƒCƒiƒŠ[ƒf[ƒ^‚Ì‹L† */
-  fprintf(fp, "%d %d\n", width, height) ; /* ‰æ‘œ‚Ì•(—ñ”)‚Æ‚‚³(s”) */
-  fprintf(fp, "255\n") ;		/* Å‘å’l */
+  fprintf(fp, "P6\n") ;			/* ï¿½Jï¿½ï¿½ï¿½[ï¿½æ‘œï¿½ï¿½ï¿½Âƒoï¿½Cï¿½iï¿½ï¿½ï¿½[ï¿½fï¿½[ï¿½^ï¿½Ì‹Lï¿½ï¿½ */
+  fprintf(fp, "%d %d\n", width, height) ; /* ï¿½æ‘œï¿½Ì•ï¿½(ï¿½ï¿½)ï¿½Æï¿½ï¿½ï¿½(ï¿½sï¿½ï¿½) */
+  fprintf(fp, "255\n") ;		/* ï¿½Å‘ï¿½l */
 
   for(m=0;m<height;m++)
     for(n=0;n<width;n++)
@@ -97,7 +97,7 @@ void write_ppm_csq(UCHAR data_buf[][DIM2][DIM3],char *fname,int width,int height
   fclose(fp) ;
 }
 
-/* ƒtƒ@ƒCƒ‹‚Ö‚Ìo—Í(CIPj */
+/* ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ö‚Ìoï¿½ï¿½(CIPï¿½j */
 void write_ppm_cip(UCHAR data_buf[][DIM2][DIM3],char *fname,int width,int height)
 {
   FILE *fp;
@@ -107,16 +107,16 @@ void write_ppm_cip(UCHAR data_buf[][DIM2][DIM3],char *fname,int width,int height
     exit(1) ;
   }
 
-  fprintf(fp, "P6\n") ;			/* ƒJƒ‰[‰æ‘œ‚©‚ÂƒoƒCƒiƒŠ[ƒf[ƒ^‚Ì‹L† */
-  fprintf(fp, "%d %d\n", width, height) ; /* ‰æ‘œ‚Ì•(—ñ”)‚Æ‚‚³(s”) */
-  fprintf(fp, "255\n") ;		/* Å‘å’l */
+  fprintf(fp, "P6\n") ;			/* ï¿½Jï¿½ï¿½ï¿½[ï¿½æ‘œï¿½ï¿½ï¿½Âƒoï¿½Cï¿½iï¿½ï¿½ï¿½[ï¿½fï¿½[ï¿½^ï¿½Ì‹Lï¿½ï¿½ */
+  fprintf(fp, "%d %d\n", width, height) ; /* ï¿½æ‘œï¿½Ì•ï¿½(ï¿½ï¿½)ï¿½Æï¿½ï¿½ï¿½(ï¿½sï¿½ï¿½) */
+  fprintf(fp, "255\n") ;		/* ï¿½Å‘ï¿½l */
 
   fwrite(&data_buf[0][0][0], sizeof(UCHAR), width*height*3, fp);
 
   fclose(fp) ;
 }
 
-/* ƒGƒ‰[ˆ— */
+/* ï¿½Gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ */
 void error1(char *message)
 {
   printf("%s\n",message);
