@@ -33,7 +33,7 @@ void copy3dimg(UCHAR res[][DIM2][DIM3],UCHAR org[][DIM2][DIM3],int dim1,int dim2
   for(i=0;i<dim1;i++)
     for(j=0;j<dim2;j++)
       for(k=0;k<dim3;k++)
-	res[i][j][k]=org[i][j][k];
+	res[i][j][k]=org[i][j][k]/2;
 }
 
 
@@ -52,7 +52,7 @@ int main(void)
     for(i=0;i<DIM1;i++)
       for(j=0;j<DIM2;j++)
 	for(k=0;k<DIM3;k++)
-	  org[i][j][k]=(UCHAR)((i*i+j*j+10*k*k)%256);
+	  org[i][j][k]=(UCHAR)((i*j+10*j+k*k)%256);
   }
      
 				/* �摜�̃R�s�[ */
