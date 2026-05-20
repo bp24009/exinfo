@@ -9,9 +9,9 @@
 
 typedef unsigned char UCHAR;
 
-				/* ‰æ‘œƒTƒCƒY‚Í•ÏX•s‰Â */
-#define DIM1  960		/* s” */
-#define DIM2 1280		/* —ñ” */
+				/* ï¿½æ‘œï¿½Tï¿½Cï¿½Yï¿½Í•ÏXï¿½sï¿½ï¿½ */
+#define DIM1  960		/* ï¿½sï¿½ï¿½ */
+#define DIM2 1280		/* ï¿½ï¿½ */
 #define DIM3    3
 
 #define RED   0
@@ -24,7 +24,7 @@ typedef unsigned char UCHAR;
 #define ON 1
 #define OFF 0
 
-#define N_REPEAT 2000	        /* ˆ—‚ÌŒJ•Ô‚µ‰ñ”iÁ”ïŠÔ‘ª’è‚Í•K‚¸100j */
+#define N_REPEAT 2000	        /* ï¿½ï¿½ï¿½ï¿½ï¿½ÌŒJï¿½Ô‚ï¿½ï¿½ñ”iï¿½ï¿½ï¿½ïï¿½Ô‘ï¿½ï¿½èï¿½Í•Kï¿½ï¿½100ï¿½j */
 
 void grayscale(UCHAR [][DIM2], UCHAR [][DIM2][DIM3], int , int );
 void gaussian_filter(UCHAR [][DIM2], UCHAR [][DIM2], int , int );
@@ -34,88 +34,90 @@ void write_ppm_cip(UCHAR [][DIM2][DIM3],char *,int ,int );
 void write_pgm_cip(UCHAR [][DIM2],char *,int ,int );
 void read_ppm_cip(UCHAR [][DIM2][DIM3], char *);
 
-  UCHAR org[DIM1][DIM2][DIM3];	/* “ü—Í‰æ‘œ */
+  UCHAR org[DIM1][DIM2][DIM3];	/* ï¿½ï¿½ï¿½Í‰æ‘œ */
 
-  UCHAR gray_org[DIM1][DIM2];	/* “ü—Í‰æ‘œ‚ÌƒOƒŒ[ƒXƒP[ƒ‹‰æ‘œ*/
-  UCHAR gray2[DIM1][DIM2];	/* •½ŠŠ‰»Œã‚Ì‰æ‘œ */
-  UCHAR res[DIM1][DIM2];	/* o—Í‰æ‘œ */
+  UCHAR gray_org[DIM1][DIM2];	/* ï¿½ï¿½ï¿½Í‰æ‘œï¿½ÌƒOï¿½ï¿½ï¿½[ï¿½Xï¿½Pï¿½[ï¿½ï¿½ï¿½æ‘œ*/
+  UCHAR gray2[DIM1][DIM2];	/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‰æ‘œ */
+  UCHAR res[DIM1][DIM2];	/* ï¿½oï¿½Í‰æ‘œ */
 
 int main(int argc, char *argv[])
 {
   int i,g,r;
-  int bairitu;       /* iŒ´‰æ‘œ|•½ŠŠ‰»‰æ‘œj‚Ì’l‚ÉŠ|‚¯‚é®”iÁ”ïŠÔ‘ª’è‚Í•K‚¸5j */
-  char in_fname[200];		/* “ü—Í‰æ‘œƒtƒ@ƒCƒ‹–¼ */
-  char out_fname[300];		/* o—Í‰æ‘œƒtƒ@ƒCƒ‹–¼ */
+  int bairitu;       /* ï¿½iï¿½ï¿½ï¿½æ‘œï¿½|ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ‘œï¿½jï¿½Ì’lï¿½ÉŠ|ï¿½ï¿½ï¿½é®ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½ïï¿½Ô‘ï¿½ï¿½èï¿½Í•Kï¿½ï¿½5ï¿½j */
+  char in_fname[200];		/* ï¿½ï¿½ï¿½Í‰æ‘œï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ */
+  char out_fname[300];		/* ï¿½oï¿½Í‰æ‘œï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ */
   
-  if(argc < 3)			/* “ü—ÍƒRƒ}ƒ“ƒhƒ`ƒFƒbƒN */
+  if(argc < 3)			/* ï¿½ï¿½ï¿½ÍƒRï¿½}ï¿½ï¿½ï¿½hï¿½`ï¿½Fï¿½bï¿½N */
   {
     printf("usage: a.out bairitu filename \n");
     exit(1);
   }
   else
   {
-    strcpy(in_fname,argv[argc-1]); /* “ü—Í‰æ‘œ‚Ìƒtƒ@ƒCƒ‹–¼ */
+    strcpy(in_fname,argv[argc-1]); /* ï¿½ï¿½ï¿½Í‰æ‘œï¿½Ìƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ */
     bairitu = atoi(argv[argc-2]);
   }
 
-  read_ppm_cip(org, in_fname);	/* ‰æ‘œ‚ğƒtƒ@ƒCƒ‹‚æ‚è“Ç‚İ‚İ */
+  read_ppm_cip(org, in_fname);	/* ï¿½æ‘œï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Ç‚İï¿½ï¿½ï¿½ */
 
 
-  for(g=0;g<DIM1;g++)		/* •½ŠŠ‰»—p‰æ‘œ‚ğWHITE/2‚É‰Šú‰»(•½ŠŠ‰»ˆ—‚ÅŠOü•”‚ğˆ—‚µ‚È‚¢‚½‚ß) */
-    for(r=0;r<DIM2;r++)		/* ‚±‚Ìˆ—‚Í‚‘¬‰»•s—v */
+  for(g=0;g<DIM1;g++)		/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½æ‘œï¿½ï¿½WHITE/2ï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÅŠOï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½ï¿½) */
+    for(r=0;r<DIM2;r++)		/* ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½v */
     {
       gray2[g][r]=WHITE/2;
     }
 
 
-				/* ŠÔ‘ª’è‚Ì‚½‚ß•K‚¸2000‰ñs‚¤ */
+				/* ï¿½ï¿½ï¿½Ô‘ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ß•Kï¿½ï¿½2000ï¿½ï¿½sï¿½ï¿½ */
   for(i=0;i<N_REPEAT;i++)
   {
-    grayscale(gray_org, org, DIM1, DIM2); /* “ü—Í‰æ‘œ(ƒJƒ‰[)‚©‚çƒOƒŒ[ƒXƒP[ƒ‹‰æ‘œì¬ */
+    grayscale(gray_org, org, DIM1, DIM2); /* ï¿½ï¿½ï¿½Í‰æ‘œ(ï¿½Jï¿½ï¿½ï¿½[)ï¿½ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½[ï¿½Xï¿½Pï¿½[ï¿½ï¿½ï¿½æ‘œï¿½ì¬ */
 
  #ifndef REMOVE
 
-    gaussian_filter(gray2, gray_org, DIM1, DIM2); /* 3~3‚ÌƒKƒEƒVƒAƒ“ƒtƒBƒ‹ƒ^‚É‚æ‚é•½ŠŠ‰» */
+    gaussian_filter(gray2, gray_org, DIM1, DIM2); /* 3ï¿½~3ï¿½ÌƒKï¿½Eï¿½Vï¿½Aï¿½ï¿½ï¿½tï¿½Bï¿½ï¿½ï¿½^ï¿½É‚ï¿½é•½ï¿½ï¿½ï¿½ï¿½ */
 
-    unsharp(res, gray2, gray_org, bairitu, DIM1, DIM2); /* Œ‹‰Ê‰æ‘œì¬ */
+    unsharp(res, gray2, gray_org, bairitu, DIM1, DIM2); /* ï¿½ï¿½ï¿½Ê‰æ‘œï¿½ì¬ */
 
  #endif
   }  
 				
-  in_fname[strlen(in_fname)-4]='\0'; /* “ü—Í‰æ‘œƒtƒ@ƒCƒ‹–¼‚©‚ç.ppmœ‚­ */
+  in_fname[strlen(in_fname)-4]='\0'; /* ï¿½ï¿½ï¿½Í‰æ‘œï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.ppmï¿½ï¿½ï¿½ï¿½ */
 
-  sprintf(out_fname,"%s_gray.pgm",in_fname); /* Œ´‰æ‘œ‚ÌƒOƒŒ[ƒXƒP[ƒ‹‰æ‘œ—po—Í‰æ‘œƒtƒ@ƒCƒ‹–¼İ’è */
-  write_pgm_cip(gray_org,out_fname,DIM2,DIM1); /* Œ´‰æ‘œ‚ÌƒOƒŒ[ƒXƒP[ƒ‹‰æ‘œ‚ğƒtƒ@ƒCƒ‹‚Öo—Í */
+  sprintf(out_fname,"%s_gray.pgm",in_fname); /* ï¿½ï¿½ï¿½æ‘œï¿½ÌƒOï¿½ï¿½ï¿½[ï¿½Xï¿½Pï¿½[ï¿½ï¿½ï¿½æ‘œï¿½pï¿½oï¿½Í‰æ‘œï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½İ’ï¿½ */
+  write_pgm_cip(gray_org,out_fname,DIM2,DIM1); /* ï¿½ï¿½ï¿½æ‘œï¿½ÌƒOï¿½ï¿½ï¿½[ï¿½Xï¿½Pï¿½[ï¿½ï¿½ï¿½æ‘œï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Öoï¿½ï¿½ */
 
-  sprintf(out_fname,"%s_gaussian.pgm",in_fname); /* •½ŠŠ‰»‰æ‘œ—po—Í‰æ‘œƒtƒ@ƒCƒ‹–¼İ’è */
-  write_pgm_cip(gray2,out_fname,DIM2,DIM1); /* •½ŠŠ‰»‰æ‘œ‚ğƒtƒ@ƒCƒ‹‚Öo—Í */
+  sprintf(out_fname,"%s_gaussian.pgm",in_fname); /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ‘œï¿½pï¿½oï¿½Í‰æ‘œï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½İ’ï¿½ */
+  write_pgm_cip(gray2,out_fname,DIM2,DIM1); /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ‘œï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Öoï¿½ï¿½ */
 
-  sprintf(out_fname,"%s_res.pgm",in_fname); /* Œ‹‰Ê‰æ‘œƒtƒ@ƒCƒ‹–¼İ’è */
-  write_pgm_cip(res,out_fname,DIM2,DIM1); /* Œ‹‰Ê‰æ‘œ‚ğƒtƒ@ƒCƒ‹‚Öo—Í */
+  sprintf(out_fname,"%s_res.pgm",in_fname); /* ï¿½ï¿½ï¿½Ê‰æ‘œï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½İ’ï¿½ */
+  write_pgm_cip(res,out_fname,DIM2,DIM1); /* ï¿½ï¿½ï¿½Ê‰æ‘œï¿½ï¿½ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Öoï¿½ï¿½ */
 
   return 0;
 }
 
- /* ƒJƒ‰[‰æ‘œ‚©‚çƒOƒŒ[ƒXƒP[ƒ‹‰æ‘œì¬ */
+ /* ï¿½Jï¿½ï¿½ï¿½[ï¿½æ‘œï¿½ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½[ï¿½Xï¿½Pï¿½[ï¿½ï¿½ï¿½æ‘œï¿½ì¬ */
 void grayscale(UCHAR gray[][DIM2], UCHAR gen[][DIM2][DIM3], int n_gyou, int n_retu)
 {
   int g,r,col;
   int tmp;
+  
+  UCHAR *pgray = &gray[0][0];
+  UCHAR *pgen = &gen[0][0][0];
 
-  for(g=0;g<n_gyou;g++)
-    for(r=0;r<n_retu;r++)
-    {
-      tmp=0;
-      for(col=0;col<DIM3;col++)
-      {
-	tmp += gen[g][r][col];
-      }
-      gray[g][r]=(UCHAR)(tmp/3.0+0.5); /* •½‹Ï’l‚ğlÌŒÜ“ü */
+  for(g=0; g<n_gyou; g++) {
+    for(r=0; r<n_retu; r++) {
+      tmp = pgen[0] + pgen[1] + pgen[2];
+      *pgray = (UCHAR)(tmp / 3.0 + 0.5); 
+
+      pgray++;
+      pgen += 3;
     }
+  }
 }
 
- /* 3~3‚ÌƒKƒEƒVƒAƒ“ƒtƒBƒ‹ƒ^‚É‚æ‚é•½ŠŠ‰» */
- /* ŠOü•”‚Íˆ—‚µ‚È‚¢B */
+ /* 3ï¿½~3ï¿½ÌƒKï¿½Eï¿½Vï¿½Aï¿½ï¿½ï¿½tï¿½Bï¿½ï¿½ï¿½^ï¿½É‚ï¿½é•½ï¿½ï¿½ï¿½ï¿½ */
+ /* ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½Íï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½B */
 void gaussian_filter(UCHAR gray[][DIM2], UCHAR data[][DIM2], int n_gyou, int n_retu)
 {
   int g,r,i,j;
@@ -124,63 +126,83 @@ void gaussian_filter(UCHAR gray[][DIM2], UCHAR data[][DIM2], int n_gyou, int n_r
                    {1 / 16.0, 2 / 16.0, 1 / 16.0} };
   double tmp;
 
-  for(g=1;g<n_gyou-1;g++)
-    for(r=1;r<n_retu-1;r++)
-    {
-      tmp=0.0;
-      for (i = -1; i <= 1; i++)
-          for (j = -1; j <= 1; j++)
-              tmp += keisuu[i + 1][j + 1] * (double)data[g + i][r + j];
-      gray[g][r]=(UCHAR)(tmp+0.5); /* lÌŒÜ“ü */
+  for(g=1; g<n_gyou-1; g++) {
+
+    UCHAR *pgray = &gray[g][1];
+    UCHAR *pdata0 = &data[g - 1][0];
+    UCHAR *pdata1 = &data[g][0];
+    UCHAR *pdata2 = &data[g + 1][0];
+
+    for(r=1; r<n_retu-1; r++) {
+      tmp = 0.0;
+      tmp += keisuu[0][0] * (double)pdata0[0] + keisuu[0][1] * (double)pdata0[1] + keisuu[0][2] * (double)pdata0[2];
+      tmp += keisuu[1][0] * (double)pdata1[0] + keisuu[1][1] * (double)pdata1[1] + keisuu[1][2] * (double)pdata1[2];
+      tmp += keisuu[2][0] * (double)pdata2[0] + keisuu[2][1] * (double)pdata2[1] + keisuu[2][2] * (double)pdata2[2];
+      
+      *pgray = (UCHAR)(tmp + 0.5); 
+      
+      pgray++;
+      pdata0++;
+      pdata1++;
+      pdata2++;
     }
+  }
 }
 
-/* •½ŠŠ‰»‰æ‘œ‚ÆŒ´‰æ‘œ‚ğ—p‚¢‚½ƒAƒ“ƒVƒƒ[ƒvƒ}ƒXƒLƒ“ƒOˆ— */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ‘œï¿½ÆŒï¿½ï¿½æ‘œï¿½ï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½Vï¿½ï¿½ï¿½[ï¿½vï¿½}ï¿½Xï¿½Lï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ */
 void unsharp(UCHAR result[][DIM2], UCHAR smooth[][DIM2], UCHAR gen[][DIM2], int bairitu, int n_gyou, int n_retu)
 {
   int g,r;
   int tmp;
 
-  for(g=0;g<n_gyou;g++)
-    for(r=0;r<n_retu;r++)
-    {
-      tmp= gen[g][r] + bairitu * (gen[g][r] - smooth[g][r]);
+  UCHAR *presult = &result[0][0];
+  UCHAR *psmooth = &smooth[0][0];
+  UCHAR *pgen = &gen[0][0];
+
+  for(g=0; g<n_gyou; g++) {
+    for(r=0; r<n_retu; r++) {
+      tmp = *pgen + bairitu * (*pgen - *psmooth);
 
       if(tmp > WHITE)
-	result[g][r]=WHITE;
+        *presult = WHITE;
       else if(tmp < BLACK)
-	result[g][r]=BLACK;
+        *presult = BLACK;
       else
-	result[g][r]=tmp;
+        *presult = tmp;
+      
+      presult++;
+      psmooth++;
+      pgen++;
     }
+  }
 }
 
 
 
-/* ‚±‚±‚æ‚è‰º‚Í•ÏX•s—v */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½è‰ºï¿½Í•ÏXï¿½sï¿½v */
 
 #define W_BYTE DIM1*DIM2*DIM3
 
-/* CIPŒ`®‚Ì‰æ‘œƒf[ƒ^‚æ‚èPPMƒtƒ@ƒCƒ‹ì¬ */
+/* CIPï¿½`ï¿½ï¿½ï¿½Ì‰æ‘œï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½PPMï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ì¬ */
 void write_ppm_cip(UCHAR data_buf[][DIM2][DIM3],char *fname,int width,int height)
 {
   FILE *fp;
   
-				/* ƒtƒ@ƒCƒ‹‚ğŠJ‚­ */
+				/* ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ */
   if((fp = fopen(fname, "wb")) == NULL) {
     fprintf(stderr, "file(%s) can't open\n", fname) ;
     exit(1) ;
   }
 
-  fprintf(fp, "P6\n") ;		/* ƒJƒ‰[‰æ‘œ‚©‚ÂƒoƒCƒiƒŠ[ƒf[ƒ^‚Ì‹L† */
-  fprintf(fp, "%d %d\n", width, height) ; /* ‰æ‘œ‚Ì•(—ñ”)‚Æ‚‚³(s”) */
-  fprintf(fp, "255\n") ;	/* Å‘å’l */
+  fprintf(fp, "P6\n") ;		/* ï¿½Jï¿½ï¿½ï¿½[ï¿½æ‘œï¿½ï¿½ï¿½Âƒoï¿½Cï¿½iï¿½ï¿½ï¿½[ï¿½fï¿½[ï¿½^ï¿½Ì‹Lï¿½ï¿½ */
+  fprintf(fp, "%d %d\n", width, height) ; /* ï¿½æ‘œï¿½Ì•ï¿½(ï¿½ï¿½)ï¿½Æï¿½ï¿½ï¿½(ï¿½sï¿½ï¿½) */
+  fprintf(fp, "255\n") ;	/* ï¿½Å‘ï¿½l */
 
-  {				/* ‰æ‘œƒf[ƒ^‚ğrepeat(+1)ŒÂ‚É•ªŠ„‚µ‚Ä‘‚«‚İ */
+  {				/* ï¿½æ‘œï¿½fï¿½[ï¿½^ï¿½ï¿½repeat(+1)ï¿½Â‚É•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
     int i;
-    int repeat=(DIM1*DIM2*DIM3)/(W_BYTE); /* •ªŠ„” */
-    int rest=DIM1*DIM2*DIM3-repeat*(W_BYTE); /* —]‚èƒf[ƒ^—Ê */
-    UCHAR *pt=(UCHAR *)&data_buf[0][0][0]; /* ‘‚«‚Şƒf[ƒ^‚ÌˆÊ’u‚ğ‚Âƒ|ƒCƒ“ƒ^ */
+    int repeat=(DIM1*DIM2*DIM3)/(W_BYTE); /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+    int rest=DIM1*DIM2*DIM3-repeat*(W_BYTE); /* ï¿½]ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ */
+    UCHAR *pt=(UCHAR *)&data_buf[0][0][0]; /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Şƒfï¿½[ï¿½^ï¿½ÌˆÊ’uï¿½ï¿½ï¿½ï¿½ï¿½Âƒ|ï¿½Cï¿½ï¿½ï¿½^ */
 
     for(i=0;i<repeat;i++)
     {
@@ -191,50 +213,50 @@ void write_ppm_cip(UCHAR data_buf[][DIM2][DIM3],char *fname,int width,int height
       fwrite(pt, sizeof(UCHAR), rest, fp);
   }
   
-  fclose(fp);			/* ƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é */    
+  fclose(fp);			/* ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ */    
 }
 
 
-/* CIPŒ`®‚Ì‰æ‘œƒf[ƒ^‚æ‚èPGMƒtƒ@ƒCƒ‹ì¬ */
+/* CIPï¿½`ï¿½ï¿½ï¿½Ì‰æ‘œï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½PGMï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ì¬ */
 void write_pgm_cip(UCHAR data_buf[][DIM2],char *fname,int width,int height)
 {
   FILE *fp;
   
-				/* ƒtƒ@ƒCƒ‹‚ğŠJ‚­ */
+				/* ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ */
   if((fp = fopen(fname, "wb")) == NULL) {
     fprintf(stderr, "file(%s) can't open\n", fname) ;
     exit(1) ;
   }
 
-  fprintf(fp, "P5\n") ;		/* ƒOƒŒ[ƒXƒP[ƒ‹‰æ‘œ‚©‚ÂƒoƒCƒiƒŠ[ƒf[ƒ^‚Ì‹L† */
-  fprintf(fp, "%d %d\n", width, height) ; /* ‰æ‘œ‚Ì•(—ñ”)‚Æ‚‚³(s”) */
-  fprintf(fp, "255\n") ;	/* Å‘å’l */
+  fprintf(fp, "P5\n") ;		/* ï¿½Oï¿½ï¿½ï¿½[ï¿½Xï¿½Pï¿½[ï¿½ï¿½ï¿½æ‘œï¿½ï¿½ï¿½Âƒoï¿½Cï¿½iï¿½ï¿½ï¿½[ï¿½fï¿½[ï¿½^ï¿½Ì‹Lï¿½ï¿½ */
+  fprintf(fp, "%d %d\n", width, height) ; /* ï¿½æ‘œï¿½Ì•ï¿½(ï¿½ï¿½)ï¿½Æï¿½ï¿½ï¿½(ï¿½sï¿½ï¿½) */
+  fprintf(fp, "255\n") ;	/* ï¿½Å‘ï¿½l */
 
   fwrite(&data_buf[0][0], sizeof(UCHAR), DIM1*DIM2, fp);
   
-  fclose(fp);			/* ƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é */    
+  fclose(fp);			/* ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ */    
 }
 
 
 #define R_BYTE DIM1*DIM2*DIM3
 
-/* ppmƒtƒH[ƒ}ƒbƒg‚Ì‰æ‘œƒtƒ@ƒCƒ‹‚ğCIPŒ`®‚Ì‰æ‘œƒƒ‚ƒŠ‚É“Ç‚İ‚İ */
+/* ppmï¿½tï¿½Hï¿½[ï¿½}ï¿½bï¿½gï¿½Ì‰æ‘œï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½CIPï¿½`ï¿½ï¿½ï¿½Ì‰æ‘œï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É“Ç‚İï¿½ï¿½ï¿½ */
 void read_ppm_cip(UCHAR data_buf[][DIM2][DIM3], char *fname)
 {
   FILE	*fp ;
   char	str_buf[1024] ;
-  char	magic_num[8] ;		/* ƒ}ƒWƒbƒNƒiƒ“ƒo[ */
-  int	max_val ;		/* ‰æ‘f’l‚ÌÅ‘å’l */    
+  char	magic_num[8] ;		/* ï¿½}ï¿½Wï¿½bï¿½Nï¿½iï¿½ï¿½ï¿½oï¿½[ */
+  int	max_val ;		/* ï¿½ï¿½fï¿½lï¿½ÌÅ‘ï¿½l */    
   int width,height;
   int count_limit;
   void *k;
   long j;
-				/* ƒtƒ@ƒCƒ‹‚ğŠJ‚­ */    
+				/* ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ */    
   if((fp = fopen(fname, "rb")) == NULL) {
     fprintf(stderr, "file(%s) can't open.\n", fname) ;
     exit(1) ;
   }
-				/* ƒ}ƒWƒbƒNƒiƒ“ƒo[“Ç‚İ‚İ */
+				/* ï¿½}ï¿½Wï¿½bï¿½Nï¿½iï¿½ï¿½ï¿½oï¿½[ï¿½Ç‚İï¿½ï¿½ï¿½ */
   count_limit=0;
   sprintf(str_buf,"#");
   while((str_buf[0]=='#') || (str_buf[0]=='\n') || (str_buf[0]=='\t') || (str_buf[0]==' '))
@@ -248,14 +270,14 @@ void read_ppm_cip(UCHAR data_buf[][DIM2][DIM3], char *fname)
     }
   }
   strcpy(magic_num, str_buf);
-  magic_num[strlen(magic_num)-1]='\0'; /* \n‚ğœ‚­ */
+  magic_num[strlen(magic_num)-1]='\0'; /* \nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
   if(strcmp(magic_num, "P6") != 0) 
   {
     fprintf(stderr, "ERROR: magic number(%s) not match.\n", magic_num) ;
     exit(1) ;
   }
 
-				/* ‰æ‘œ‚Ì•(—ñ”)‚Æ‚‚³(s”) */
+				/* ï¿½æ‘œï¿½Ì•ï¿½(ï¿½ï¿½)ï¿½Æï¿½ï¿½ï¿½(ï¿½sï¿½ï¿½) */
   count_limit=0;
   sprintf(str_buf,"#");
   while((str_buf[0]=='#') || (str_buf[0]=='\n') || (str_buf[0]=='\t') || (str_buf[0]==' '))
@@ -269,13 +291,13 @@ void read_ppm_cip(UCHAR data_buf[][DIM2][DIM3], char *fname)
     }
   }
   sscanf(str_buf,"%d %d",&width,&height);
-  if((height != DIM1) || (width != DIM2)) /* ‰æ‘œ‚ÌƒTƒCƒY‚ª‰¼’è‚µ‚½’l‚ÆˆÙ‚È‚éê‡‚ÍƒGƒ‰[‚ÅI—¹ */
+  if((height != DIM1) || (width != DIM2)) /* ï¿½æ‘œï¿½ÌƒTï¿½Cï¿½Yï¿½ï¿½ï¿½ï¿½ï¿½è‚µï¿½ï¿½ï¿½lï¿½ÆˆÙ‚È‚ï¿½ê‡ï¿½ÍƒGï¿½ï¿½ï¿½[ï¿½ÅIï¿½ï¿½ */
   {
     fprintf(stderr, "ERROR: Dimension dosenot match.\n");
     exit(1) ;
   }
 
-				/* Å‘å’l */
+				/* ï¿½Å‘ï¿½l */
   count_limit=0;
   sprintf(str_buf,"#");
   while((str_buf[0]=='#') || (str_buf[0]=='\n') || (str_buf[0]=='\t') || (str_buf[0]==' '))
@@ -295,12 +317,12 @@ void read_ppm_cip(UCHAR data_buf[][DIM2][DIM3], char *fname)
     exit(1) ;
   }
 
-				/* ‰æ‘œƒf[ƒ^‚ğrepeat(+1)ŒÂ‚É•ªŠ„‚µ‚Ä“Ç‚İ‚İ */
+				/* ï¿½æ‘œï¿½fï¿½[ï¿½^ï¿½ï¿½repeat(+1)ï¿½Â‚É•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä“Ç‚İï¿½ï¿½ï¿½ */
   {
     int i;
-    int repeat=(DIM1*DIM2*DIM3)/(R_BYTE); /* •ªŠ„” */
-    int rest=DIM1*DIM2*DIM3-repeat*(R_BYTE); /* —]‚èƒf[ƒ^—Ê */
-    UCHAR *pt=(UCHAR *)&data_buf[0][0][0]; /* “Ç‚İ‚İƒf[ƒ^‚ÌˆÊ’u‚ğ‚Âƒ|ƒCƒ“ƒ^ */
+    int repeat=(DIM1*DIM2*DIM3)/(R_BYTE); /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
+    int rest=DIM1*DIM2*DIM3-repeat*(R_BYTE); /* ï¿½]ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½ */
+    UCHAR *pt=(UCHAR *)&data_buf[0][0][0]; /* ï¿½Ç‚İï¿½ï¿½İƒfï¿½[ï¿½^ï¿½ÌˆÊ’uï¿½ï¿½ï¿½ï¿½ï¿½Âƒ|ï¿½Cï¿½ï¿½ï¿½^ */
 
     for(i=0;i<repeat;i++)
     {
@@ -311,6 +333,6 @@ void read_ppm_cip(UCHAR data_buf[][DIM2][DIM3], char *fname)
       j=fread(pt, sizeof(UCHAR), rest, fp);
   }
 
-  /* ƒtƒ@ƒCƒ‹‚ğ•Â‚¶‚é */    
+  /* ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½ */    
   fclose(fp);
 }
