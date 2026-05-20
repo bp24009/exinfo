@@ -99,30 +99,20 @@ int main(int argc, char *argv[])
  /* �J���[�摜����O���[�X�P�[���摜�쐬 */
 void grayscale(UCHAR gray[][DIM2], UCHAR gen[][DIM2][DIM3], int n_gyou, int n_retu)
 {
-  int i;
-  int total = n_gyou * n_retu;
-  int limit = total / 4;  
-  int rem = total % 4;    
-
+  int g,r,col;
+  int tmp;
+  
   UCHAR *pgray = &gray[0][0];
   UCHAR *pgen = &gen[0][0][0];
 
+  for(g=0; g<n_gyou; g++) {
+    for(r=0; r<n_retu; r++) {
+      tmp = pgen[0] + pgen[1] + pgen[2];
+      *pgray = (UCHAR)(tmp / 3.0 + 0.5); 
 
-  for(i = 0; i < limit; i++) {
-    pgray[0] = (UCHAR)((pgen[0] + pgen[1] + pgen[2]) / 3.0 + 0.5);
-    pgray[1] = (UCHAR)((pgen[3] + pgen[4] + pgen[5]) / 3.0 + 0.5);
-    pgray[2] = (UCHAR)((pgen[6] + pgen[7] + pgen[8]) / 3.0 + 0.5);
-    pgray[3] = (UCHAR)((pgen[9] + pgen[10] + pgen[11]) / 3.0 + 0.5);
-
-    pgray += 4;
-    pgen += 12;
-  }
-  
-
-  for(i = 0; i < rem; i++) {
-    *pgray = (UCHAR)((pgen[0] + pgen[1] + pgen[2]) / 3.0 + 0.5);
-    pgray++;
-    pgen += 3;
+      pgray++;
+      pgen += 3;
+    }
   }
 }
 
@@ -130,59 +120,31 @@ void grayscale(UCHAR gray[][DIM2], UCHAR gen[][DIM2][DIM3], int n_gyou, int n_re
  /* �O�����͏������Ȃ��B */
 void gaussian_filter(UCHAR gray[][DIM2], UCHAR data[][DIM2], int n_gyou, int n_retu)
 {
-  int g, r;
+  int g,r,i,j;
   double keisuu[3][3] = { {1 / 16.0, 2 / 16.0, 1 / 16.0},
-                          {2 / 16.0, 4 / 16.0, 2 / 16.0},
-                          {1 / 16.0, 2 / 16.0, 1 / 16.0} };
-  
-  int width = n_retu - 2;
-  int limit = width / 4;
-  int rem = width % 4;
+                   {2 / 16.0, 4 / 16.0, 2 / 16.0},
+                   {1 / 16.0, 2 / 16.0, 1 / 16.0} };
+  double tmp;
 
-  for(g = 1; g < n_gyou - 1; g++) {
-    UCHAR *pgrey = &gray[g][1];
+  for(g=1; g<n_gyou-1; g++) {
+
+    UCHAR *pgray = &gray[g][1];
     UCHAR *pdata0 = &data[g - 1][0];
     UCHAR *pdata1 = &data[g][0];
     UCHAR *pdata2 = &data[g + 1][0];
 
-    for(r = 0; r < limit; r++) {
-      double t0 = 0.0, t1 = 0.0, t2 = 0.0, t3 = 0.0;
-
-      t0 += keisuu[0][0]*pdata0[0] + keisuu[0][1]*pdata0[1] + keisuu[0][2]*pdata0[2];
-      t0 += keisuu[1][0]*pdata1[0] + keisuu[1][1]*pdata1[1] + keisuu[1][2]*pdata1[2];
-      t0 += keisuu[2][0]*pdata2[0] + keisuu[2][1]*pdata2[1] + keisuu[2][2]*pdata2[2];
-
-      t1 += keisuu[0][0]*pdata0[1] + keisuu[0][1]*pdata0[2] + keisuu[0][2]*pdata0[3];
-      t1 += keisuu[1][0]*pdata1[1] + keisuu[1][1]*pdata1[2] + keisuu[1][2]*pdata1[3];
-      t1 += keisuu[2][0]*pdata2[1] + keisuu[2][1]*pdata2[2] + keisuu[2][2]*pdata2[3];
-
-      t2 += keisuu[0][0]*pdata0[2] + keisuu[0][1]*pdata0[3] + keisuu[0][2]*pdata0[4];
-      t2 += keisuu[1][0]*pdata1[2] + keisuu[1][1]*pdata1[3] + keisuu[1][2]*pdata1[4];
-      t2 += keisuu[2][0]*pdata2[2] + keisuu[2][1]*pdata2[3] + keisuu[2][2]*pdata2[4];
-
-      t3 += keisuu[0][0]*pdata0[3] + keisuu[0][1]*pdata0[4] + keisuu[0][2]*pdata0[5];
-      t3 += keisuu[1][0]*pdata1[3] + keisuu[1][1]*pdata1[4] + keisuu[1][2]*pdata1[5];
-      t3 += keisuu[2][0]*pdata2[3] + keisuu[2][1]*pdata2[4] + keisuu[2][2]*pdata2[5];
-
-      pgrey[0] = (UCHAR)(t0 + 0.5);
-      pgrey[1] = (UCHAR)(t1 + 0.5);
-      pgrey[2] = (UCHAR)(t2 + 0.5);
-      pgrey[3] = (UCHAR)(t3 + 0.5);
-
-      pgrey += 4;
-      pdata0 += 4;
-      pdata1 += 4;
-      pdata2 += 4;
-    }
-
-    for(r = 0; r < rem; r++) {
-      double tmp = 0.0;
-      tmp += keisuu[0][0]*pdata0[0] + keisuu[0][1]*pdata0[1] + keisuu[0][2]*pdata0[2];
-      tmp += keisuu[1][0]*pdata1[0] + keisuu[1][1]*pdata1[1] + keisuu[1][2]*pdata1[2];
-      tmp += keisuu[2][0]*pdata2[0] + keisuu[2][1]*pdata2[1] + keisuu[2][2]*pdata2[2];
+    for(r=1; r<n_retu-1; r++) {
+      tmp = 0.0;
+      tmp += keisuu[0][0] * (double)pdata0[0] + keisuu[0][1] * (double)pdata0[1] + keisuu[0][2] * (double)pdata0[2];
+      tmp += keisuu[1][0] * (double)pdata1[0] + keisuu[1][1] * (double)pdata1[1] + keisuu[1][2] * (double)pdata1[2];
+      tmp += keisuu[2][0] * (double)pdata2[0] + keisuu[2][1] * (double)pdata2[1] + keisuu[2][2] * (double)pdata2[2];
       
-      *pgrey = (UCHAR)(tmp + 0.5);
-      pgrey++; pdata0++; pdata1++; pdata2++;
+      *pgray = (UCHAR)(tmp + 0.5); 
+      
+      pgray++;
+      pdata0++;
+      pdata1++;
+      pdata2++;
     }
   }
 }
@@ -190,52 +152,28 @@ void gaussian_filter(UCHAR gray[][DIM2], UCHAR data[][DIM2], int n_gyou, int n_r
 /* �������摜�ƌ��摜��p�����A���V���[�v�}�X�L���O���� */
 void unsharp(UCHAR result[][DIM2], UCHAR smooth[][DIM2], UCHAR gen[][DIM2], int bairitu, int n_gyou, int n_retu)
 {
-  int i;
-  int total = n_gyou * n_retu;
-  int limit = total / 4;
-  int rem = total % 4;
+  int g,r;
+  int tmp;
 
   UCHAR *presult = &result[0][0];
   UCHAR *psmooth = &smooth[0][0];
   UCHAR *pgen = &gen[0][0];
 
-  for(i = 0; i < limit; i++) {
-    int tmp0 = pgen[0] + bairitu * (pgen[0] - psmooth[0]);
-    int tmp1 = pgen[1] + bairitu * (pgen[1] - psmooth[1]);
-    int tmp2 = pgen[2] + bairitu * (pgen[2] - psmooth[2]);
-    int tmp3 = pgen[3] + bairitu * (pgen[3] - psmooth[3]);
+  for(g=0; g<n_gyou; g++) {
+    for(r=0; r<n_retu; r++) {
+      tmp = *pgen + bairitu * (*pgen - *psmooth);
 
-    if(tmp0 > WHITE) presult[0] = WHITE;
-    else if(tmp0 < BLACK) presult[0] = BLACK;
-    else presult[0] = tmp0;
-
-    if(tmp1 > WHITE) presult[1] = WHITE;
-    else if(tmp1 < BLACK) presult[1] = BLACK;
-    else presult[1] = tmp1;
-
-    if(tmp2 > WHITE) presult[2] = WHITE;
-    else if(tmp2 < BLACK) presult[2] = BLACK;
-    else presult[2] = tmp2;
-
-    if(tmp3 > WHITE) presult[3] = WHITE;
-    else if(tmp3 < BLACK) presult[3] = BLACK;
-    else presult[3] = tmp3;
-
-    presult += 4;
-    psmooth += 4;
-    pgen += 4;
-  }
-
-  for(i = 0; i < rem; i++) {
-    int tmp = *pgen + bairitu * (*pgen - *psmooth);
-    
-    if(tmp > WHITE) *presult = WHITE;
-    else if(tmp < BLACK) *presult = BLACK;
-    else *presult = tmp;
-
-    presult++;
-    psmooth++;
-    pgen++;
+      if(tmp > WHITE)
+        *presult = WHITE;
+      else if(tmp < BLACK)
+        *presult = BLACK;
+      else
+        *presult = tmp;
+      
+      presult++;
+      psmooth++;
+      pgen++;
+    }
   }
 }
 
